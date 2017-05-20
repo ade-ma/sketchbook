@@ -30,6 +30,7 @@ solarFlux = lambda AM: 1353 * 0.7**(AM**0.678)
 
 dates = [b.sun(x.to_pydatetime()) for x in d['DATE']][0:365]
 
+plt.figure(figsize=(20,10))
 for date in dates: 
 	intervals = np.array([x.to_datetime() for x in
 		pd.date_range(start=date['sunrise'], end=date['sunset'], freq='5Min')])
@@ -42,7 +43,7 @@ plt.ylabel("joules/day")
 plt.title("joules vs. day")
 
 plt.savefig('fig0.png')
-plt.figure()
+plt.figure(figsize=(20,10))
 
 powerDensityNoon = np.array([solarFlux(airMass(90-b.solar_elevation(x['noon']))) for x in dates])
 
@@ -54,7 +55,7 @@ tmin = sum(np.array(_chunk(d['TMIN'], 365)[0:-2]))/length
 tmax = sum(np.array(_chunk(d['TMAX'], 365)[0:-2]))/length
 
 plt.savefig('fig1.png')
-plt.figure()
+plt.figure(figsize=(20,10))
 
 plt.fill_between(d.index[0:365], tmin[0:365], tmax[0:365], alpha=0.7)
 #plt.plot(d['DATE'], daylight, label="daylight (hrs)")
